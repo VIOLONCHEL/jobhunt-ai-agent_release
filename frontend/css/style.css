@@ -613,7 +613,6 @@ button:hover {
   }
 }
 
-/* ===== Overrides: advanced filters row ===== */
 .advanced-filters {
   display: flex;
   align-items: center;
@@ -632,12 +631,10 @@ button:hover {
   white-space: nowrap;
 }
 
-/* On wide screens try to keep them in one row */
 @media (min-width: 1024px) {
   .advanced-filters { flex-wrap: nowrap; }
 }
 
-/* ===== Job actions row (Read more / Apply / AI) ===== */
 .job-actions {
   margin-top: 10px;
   display: flex;
@@ -677,10 +674,8 @@ button:hover {
 
 .action-btn:hover { filter: brightness(0.97); }
 
-/* ===== Remove search meta if осталось ===== */
 .search-meta { display: none !important; }
 
-/* ===== Admin table responsiveness ===== */
 .admin-card {
   overflow-x: auto;
 }
@@ -688,7 +683,7 @@ button:hover {
 .admin-card table {
   width: 100%;
   table-layout: auto;
-  min-width: 760px; /* allows fitting email/role without breaking layout */
+  min-width: 760px; 
 }
 
 .admin-card th,
@@ -699,15 +694,14 @@ button:hover {
 
 .admin-card td:nth-child(3),
 .admin-card th:nth-child(3) {
-  min-width: 240px; /* Email column */
+  min-width: 240px; 
 }
 
 .admin-card td:nth-child(4),
 .admin-card th:nth-child(4) {
-  min-width: 120px; /* Role column */
+  min-width: 120px; 
 }
 
-/* selects inside tables shouldn't stretch */
 .admin-card select,
 .jobs-table select {
   width: auto !important;

@@ -87,36 +87,25 @@ def extract_role(resume_text: str) -> str:
 
 
 def build_query(resume_text: str) -> str:
-    """
-    Main query for logging/UI.
-    Keep it broad, not too restrictive.
-    """
+
     role = extract_role(resume_text)
     skills = extract_skills(resume_text)
 
     if not skills:
         return role
 
-    # Only 1-2 strongest skills in the main query.
-    # Long query kills Adzuna results.
     return " ".join([role] + skills[:2])
 
 
 def build_search_queries(resume_text: str) -> list[str]:
-    """
-    Query expansion for Adzuna.
-    Instead of sending one long query, send multiple broad queries,
-    then merge vacancies and rank locally.
-    """
+
     role = extract_role(resume_text)
     skills = extract_skills(resume_text)
 
     queries = []
 
-    # 1. broad role query
     queries.append(role)
 
-    # 2. role + each skill
     for skill in skills:
         if skill in {"python", "javascript", "typescript", "java"}:
             queries.append(f"{skill} developer")
@@ -131,11 +120,9 @@ def build_search_queries(resume_text: str) -> list[str]:
         else:
             queries.append(skill)
 
-    # 3. fallback if resume is very short
     if not queries:
         queries = ["software developer", "python developer", "data analyst"]
 
-    # remove duplicates, keep order
     unique = []
     for q in queries:
         q = q.strip()

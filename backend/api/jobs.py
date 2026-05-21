@@ -128,7 +128,7 @@ def match_jobs(
                 job_batches.append(jobs)
 
             except Exception:
-                # Do not crash whole search if one expanded query fails.
+            
                 continue
 
         jobs = merge_jobs_without_duplicates(job_batches)
