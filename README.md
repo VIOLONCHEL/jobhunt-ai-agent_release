@@ -32,5 +32,5 @@ Git, GitHub
 ### Clone repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/jobhunt-ai-agent.git
+git clone https://github.com/VIOLONCHEL/jobhunt-ai-agent.git
 cd jobhunt-ai-agent
