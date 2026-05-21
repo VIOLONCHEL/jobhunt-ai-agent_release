@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+passlib
+python-dotenv
+requests
+pydantic
+email-validator
+python-jose[cryptography]
+scikit-learn
+numpy==1.26.4
+pandas
+openai
+torch==2.2.2
+sentence-transformers==2.7.0

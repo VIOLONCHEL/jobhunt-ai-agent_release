@@ -1,0 +1,12 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+test.db
+.env
+.DS_Store
+.history/
+*.png
+*.jpg
+*.jpeg
+*.log

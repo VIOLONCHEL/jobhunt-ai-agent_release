@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JobHunt AI</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <div id="toastContainer" class="toast-container"></div>
+
+    <header>
+      <div class="brand">JobHunt AI</div>
+
+      <div class="header-actions" id="headerActions">
+        <span id="currentUserGreeting"></span>
+        <span id="currentUserRole" class="role-badge"></span>
+        <button id="logoutBtn" onclick="handleLogout()" style="display: none">
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section id="auth-view" class="hero-layout">
+        <div class="hero-copy">
+          <span class="hero-tag">AI-powered job search assistant</span>
+
+          <h1>
+            Find better vacancies faster and understand why they fit your
+            resume.
+          </h1>
+
+          <p>
+            JobHunt AI analyzes your resume, generates a search query
+            automatically, ranks vacancies using dynamic job data, and helps you
+            organize saved, applied, and interview-stage opportunities in one
+            place.
+          </p>
+
+          <ul class="feature-list">
+            <li>Automatic search generation from resume content</li>
+            <li>Dynamic vacancy data from Adzuna API</li>
+            <li>Saved job tracking with personal data isolation</li>
+            <li>AI insights for vacancy fit explanation</li>
+          </ul>
+        </div>
+
+        <div class="auth-card auth-card-single">
+          <div class="auth-tabs">
+            <button
+              id="loginTab"
+              class="tab active"
+              onclick="setAuthMode('login')"
+            >
+              Login
+            </button>
+
+            <button
+              id="registerTab"
+              class="tab"
+              onclick="setAuthMode('register')"
+            >
+              Register
+            </button>
+          </div>
+
+          <h2 id="authTitle">Login</h2>
+          <div id="authMessage"></div>
+
+          <div id="authNicknameWrap" style="display: none">
+            <label for="authNickname">Nickname</label>
+            <input
+              id="authNickname"
+              type="text"
+              placeholder="Nickname"
+              maxlength="40"
+            />
+          </div>
+
+          <label for="authEmail">Email</label>
+          <input id="authEmail" type="email" placeholder="Email" />
+          <div id="emailRules" class="validation-list"></div>
+
+          <div id="passwordGroup">
+            <label for="authPassword">Password</label>
+
+            <div class="password-wrap">
+              <input id="authPassword" type="password" placeholder="Password" />
+
+              <button
+                type="button"
+                class="ghost-btn"
+                onclick="togglePasswordVisibility('authPassword', this)"
+              >
+                Show
+              </button>
+            </div>
+
+            <div id="passwordRules" class="validation-list"></div>
+          </div>
+
+          <button id="authSubmitBtn" onclick="handleAuthSubmit()">Login</button>
+        </div>
+      </section>
+
+      <section id="app-view" style="display: none">
+        <nav class="app-nav">
+          <button
+            class="nav-tab active"
+            data-view="dashboard"
+            onclick="setAppView('dashboard', event)"
+          >
+            Dashboard
+          </button>
+
+          <button
+            class="nav-tab"
+            data-view="profile"
+            onclick="setAppView('profile', event)"
+          >
+            Profile
+          </button>
+
+          <button
+            class="nav-tab"
+            data-view="admin"
+            id="adminNavBtn"
+            style="display: none"
+            onclick="setAppView('admin', event)"
+          >
+            Admin
+          </button>
+        </nav>
+
+        <section id="dashboard-view" class="panel">
+          <h2>Match your resume</h2>
+
+          <textarea
+            id="resumeText"
+            placeholder="Paste your resume here..."
+          ></textarea>
+
+          <button onclick="matchJobs()">Find Jobs</button>
+
+          <h3>Matched Jobs</h3>
+
+          <div class="toolbar-grid">
+            <div class="job-filters">
+              <button onclick="loadCategory('all')">All</button>
+              <button onclick="loadCategory('saved')">Saved</button>
+              <button onclick="loadCategory('applied')">Applied</button>
+              <button onclick="loadCategory('interview')">Interview</button>
+            </div>
+
+            <div class="advanced-filters">
+              <select id="sortSelect" onchange="applyAdvancedFilters()">
+                <option value="score_desc">Highest match first</option>
+                <option value="score_asc">Lowest match first</option>
+              </select>
+
+              <select id="workModeFilter" onchange="applyAdvancedFilters()">
+                <option value="">All work modes</option>
+                <option value="remote">Remote</option>
+                <option value="hybrid">Hybrid</option>
+                <option value="onsite">Onsite</option>
+                <option value="full_time">Full time</option>
+                <option value="part_time">Part time</option>
+              </select>
+
+              <select id="experienceFilter" onchange="applyAdvancedFilters()">
+                <option value="">All experience</option>
+                <option value="junior">Junior (0–2y)</option>
+                <option value="middle">Middle (2–5y)</option>
+                <option value="senior">Senior (5–7y)</option>
+                <option value="lead">Lead (7+y)</option>
+              </select>
+
+              <button
+                type="button"
+                class="ghost-btn"
+                id="resetFiltersBtn"
+                onclick="resetAdvancedFilters()"
+              >
+                Reset filters
+              </button>
+            </div>
+          </div>
+
+          <div id="matchResults"></div>
+        </section>
+
+        <section id="profile-view" class="panel" style="display: none">
+          <h2>Profile settings</h2>
+          <div id="profileMessage"></div>
+
+          <div class="profile-grid">
+            <div class="admin-card">
+              <h3>Profile information</h3>
+
+              <label for="profileNickname">Nickname</label>
+              <input id="profileNickname" type="text" />
+
+              <label for="profileEmail">Email</label>
+              <input id="profileEmail" type="email" />
+
+              <button onclick="saveProfileChanges()">Save profile</button>
+            </div>
+
+            <div class="admin-card">
+              <h3>Change password</h3>
+
+              <label for="currentPassword">Current password</label>
+              <div class="password-wrap">
+                <input id="currentPassword" type="password" />
+                <button
+                  type="button"
+                  class="ghost-btn"
+                  onclick="togglePasswordVisibility('currentPassword', this)"
+                >
+                  Show
+                </button>
+              </div>
+
+              <label for="newPassword">New password</label>
+              <div class="password-wrap">
+                <input
+                  id="newPassword"
+                  type="password"
+                  oninput="renderProfilePasswordRules()"
+                />
+                <button
+                  type="button"
+                  class="ghost-btn"
+                  onclick="togglePasswordVisibility('newPassword', this)"
+                >
+                  Show
+                </button>
+              </div>
+
+              <label for="confirmNewPassword">Confirm new password</label>
+              <div class="password-wrap">
+                <input id="confirmNewPassword" type="password" />
+                <button
+                  type="button"
+                  class="ghost-btn"
+                  onclick="togglePasswordVisibility('confirmNewPassword', this)"
+                >
+                  Show
+                </button>
+              </div>
+
+              <div id="profilePasswordRules" class="validation-list"></div>
+
+              <button onclick="handleChangePassword()">Update password</button>
+            </div>
+          </div>
+
+          <div class="admin-card danger-zone">
+            <h3>Danger zone</h3>
+
+            <p>
+              Deleting your profile will permanently remove your saved jobs,
+              statuses, and account data.
+            </p>
+
+            <button class="danger-btn" onclick="handleDeleteProfile()">
+              Delete profile permanently
+            </button>
+          </div>
+        </section>
+
+        <section id="admin-view" class="panel" style="display: none">
+          <h2>Admin Panel</h2>
+
+          <div class="admin-grid">
+            <div class="admin-card">
+              <h3>System Statistics</h3>
+              <div id="adminStats"></div>
+            </div>
+
+            <div class="admin-card admin-card-full">
+              <h3>Users and Roles</h3>
+              <div id="adminUsersTable"></div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/match.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

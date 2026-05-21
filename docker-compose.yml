@@ -1,0 +1,31 @@
+name: jobhunt_ai_agent
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: jobhunt_backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+
+  db:
+    image: postgres:16
+    container_name: jobhunt_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: jobhunt_db
+      POSTGRES_USER: jobhunt_user
+      POSTGRES_PASSWORD: jobhunt_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
