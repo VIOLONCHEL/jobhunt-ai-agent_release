@@ -9,11 +9,6 @@ JobHunt AI Agent is an intelligent job search assistance system that combines cl
 <img width="1440" height="814" alt="image" src="https://github.com/user-attachments/assets/877017b6-54ff-467b-a55a-cfcee82b25ca" />
 <img width="1440" height="814" alt="image" src="https://github.com/user-attachments/assets/1a9440ce-e942-4d28-aec2-31240a004151" />
 
-
-<img width="1440" height="814" alt="image" src="https://github.com/user-attachments/assets/294689c8-4b0c-4102-bd73-645dd9e6c662" />
-<img width="1440" height="814" alt="image" src="https://github.com/user-attachments/assets/14daf632-9e8d-44a0-86cf-adb80b1591ca" />
-
-
 ---
 
 ## Technology Stack
