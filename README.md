@@ -18,6 +18,7 @@ HTML, CSS, JavaScript
 Python, FastAPI, SQLAlchemy, JWT Authentication, Pydantic
 ### Database
 PostgreSQL
+Prototype development with SQLite
 ### AI / Matching
 Scikit-learn, TF-IDF, Cosine Similarity, SBERT, OpenAI API
 ### Dynamic Dataset
